@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Annotation" representedClassName="Annotation" syncable="YES">
+        <attribute name="latitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Image" inverseName="annotation" inverseEntity="Image" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName="Image" syncable="YES">
+        <attribute name="imageURL" attributeType="String" syncable="YES"/>
+        <relationship name="annotation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Annotation" inverseName="image" inverseEntity="Annotation" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Annotation" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Image" positionX="-54" positionY="-9" width="128" height="75"/>
+    </elements>
+</model>

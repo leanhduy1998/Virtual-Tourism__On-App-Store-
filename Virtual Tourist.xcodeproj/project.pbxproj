@@ -18,6 +18,14 @@
 		24617F821F083514001C433F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F811F083514001C433F /* CollectionViewCell.swift */; };
 		24617F841F0849C0001C433F /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F831F0849C0001C433F /* ImageDetailViewController.swift */; };
 		24617F861F0979C3001C433F /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F851F0979C3001C433F /* CustomPointAnnotation.swift */; };
+		24617F891F097DF1001C433F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24617F871F097DF1001C433F /* Model.xcdatamodeld */; };
+		24617F8B1F0988FD001C433F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F8A1F0988FD001C433F /* CoreDataStack.swift */; };
+		24617FA01F098B9B001C433F /* Annotation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F9C1F098B9B001C433F /* Annotation+CoreDataClass.swift */; };
+		24617FA11F098B9B001C433F /* Annotation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F9D1F098B9B001C433F /* Annotation+CoreDataProperties.swift */; };
+		24617FA21F098B9B001C433F /* Image+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F9E1F098B9B001C433F /* Image+CoreDataClass.swift */; };
+		24617FA31F098B9B001C433F /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617F9F1F098B9B001C433F /* Image+CoreDataProperties.swift */; };
+		24617FA61F09AAD1001C433F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617FA51F09AAD1001C433F /* TableViewController.swift */; };
+		24617FA81F09AB01001C433F /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617FA71F09AB01001C433F /* TableViewCell.swift */; };
 		24739BF71F05E22D008F05FE /* AddAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BF61F05E22D008F05FE /* AddAnnotationViewController.swift */; };
 		24739BF91F06D1F9008F05FE /* ImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BF81F06D1F9008F05FE /* ImagesCollectionViewController.swift */; };
 		24739BFC1F06DD3A008F05FE /* FlickrConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BFB1F06DD3A008F05FE /* FlickrConstant.swift */; };
@@ -59,6 +67,14 @@
 		24617F811F083514001C433F /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		24617F831F0849C0001C433F /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		24617F851F0979C3001C433F /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
+		24617F881F097DF1001C433F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		24617F8A1F0988FD001C433F /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		24617F9C1F098B9B001C433F /* Annotation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Annotation+CoreDataClass.swift"; path = "../Annotation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		24617F9D1F098B9B001C433F /* Annotation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Annotation+CoreDataProperties.swift"; path = "../Annotation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		24617F9E1F098B9B001C433F /* Image+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Image+CoreDataClass.swift"; path = "../Image+CoreDataClass.swift"; sourceTree = "<group>"; };
+		24617F9F1F098B9B001C433F /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Image+CoreDataProperties.swift"; path = "../Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		24617FA51F09AAD1001C433F /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		24617FA71F09AB01001C433F /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		24739BF61F05E22D008F05FE /* AddAnnotationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnotationViewController.swift; sourceTree = "<group>"; };
 		24739BF81F06D1F9008F05FE /* ImagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewController.swift; sourceTree = "<group>"; };
 		24739BFB1F06DD3A008F05FE /* FlickrConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstant.swift; sourceTree = "<group>"; };
@@ -95,7 +111,13 @@
 			isa = PBXGroup;
 			children = (
 				24739BFA1F06DD1F008F05FE /* Flickr */,
+				24617F8A1F0988FD001C433F /* CoreDataStack.swift */,
 				24617F851F0979C3001C433F /* CustomPointAnnotation.swift */,
+				24617F9C1F098B9B001C433F /* Annotation+CoreDataClass.swift */,
+				24617F9D1F098B9B001C433F /* Annotation+CoreDataProperties.swift */,
+				24617F9E1F098B9B001C433F /* Image+CoreDataClass.swift */,
+				24617F9F1F098B9B001C433F /* Image+CoreDataProperties.swift */,
+				24617F871F097DF1001C433F /* Model.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -110,11 +132,12 @@
 		24342E241F05CBA800C541DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				24617FA41F09AAB0001C433F /* Cells */,
 				245DBA181F046C1C00CDE0C0 /* MapViewController.swift */,
 				24739BF61F05E22D008F05FE /* AddAnnotationViewController.swift */,
 				24739BF81F06D1F9008F05FE /* ImagesCollectionViewController.swift */,
-				24617F811F083514001C433F /* CollectionViewCell.swift */,
 				24617F831F0849C0001C433F /* ImageDetailViewController.swift */,
+				24617FA51F09AAD1001C433F /* TableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -179,6 +202,15 @@
 				245DBA451F046F8E00CDE0C0 /* MapKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		24617FA41F09AAB0001C433F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				24617F811F083514001C433F /* CollectionViewCell.swift */,
+				24617FA71F09AB01001C433F /* TableViewCell.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		24739BFA1F06DD1F008F05FE /* Flickr */ = {
@@ -332,15 +364,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24617FA01F098B9B001C433F /* Annotation+CoreDataClass.swift in Sources */,
 				24739BF91F06D1F9008F05FE /* ImagesCollectionViewController.swift in Sources */,
 				245DBA191F046C1C00CDE0C0 /* MapViewController.swift in Sources */,
 				24739BFC1F06DD3A008F05FE /* FlickrConstant.swift in Sources */,
 				24617F821F083514001C433F /* CollectionViewCell.swift in Sources */,
 				245DBA171F046C1C00CDE0C0 /* AppDelegate.swift in Sources */,
+				24617FA31F098B9B001C433F /* Image+CoreDataProperties.swift in Sources */,
 				24739BF71F05E22D008F05FE /* AddAnnotationViewController.swift in Sources */,
+				24617F8B1F0988FD001C433F /* CoreDataStack.swift in Sources */,
 				24739BFE1F06E841008F05FE /* FlickrClient.swift in Sources */,
+				24617FA21F098B9B001C433F /* Image+CoreDataClass.swift in Sources */,
+				24617FA61F09AAD1001C433F /* TableViewController.swift in Sources */,
+				24617F891F097DF1001C433F /* Model.xcdatamodeld in Sources */,
 				24617F861F0979C3001C433F /* CustomPointAnnotation.swift in Sources */,
+				24617FA81F09AB01001C433F /* TableViewCell.swift in Sources */,
 				24617F841F0849C0001C433F /* ImageDetailViewController.swift in Sources */,
+				24617FA11F098B9B001C433F /* Annotation+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +654,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		24617F871F097DF1001C433F /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				24617F881F097DF1001C433F /* Model.xcdatamodel */,
+			);
+			currentVersion = 24617F881F097DF1001C433F /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 245DBA0B1F046C1C00CDE0C0 /* Project object */;
 }
