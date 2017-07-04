@@ -9,7 +9,15 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
+ 
 
+
+    @IBOutlet var imageV: UIImageView!
+
+    @IBOutlet var locationLabel: UILabel!
+
+    @IBOutlet var numberOfPicsLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -14,7 +14,7 @@ class ImagesCollectionViewController: UICollectionViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     var imageUrlArr = [String]()
     var imageIndex = Int()
-    var annotationTitle = String()
+    var annotation = ImageAnnotation()
 
     
     override func viewDidLoad() {
@@ -45,7 +45,7 @@ class ImagesCollectionViewController: UICollectionViewController {
         if let destination = segue.destination as? ImageDetailViewController {
             let imageURL = URL(string: imageUrlArr[imageIndex])
             destination.imageURL = imageURL
-            destination.annotationTitle = annotationTitle
+            destination.annotation = annotation
         }
         
     }

@@ -15,7 +15,7 @@ class AddAnnotationViewController: UIViewController {
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
-    private var annotation = CustomPointAnnotation()
+    private var annotation = ImageAnnotation()
     private var imageUrlArr = [String]()
     private var goingForward: Bool = false
     
@@ -48,8 +48,6 @@ class AddAnnotationViewController: UIViewController {
             self.annotation.title = self.searchTF.text
             self.annotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
             self.mapView.addAnnotation(self.annotation)
-            
-            MapViewController.annotationsDic[self.searchTF.text!] = self.annotation
             
             DispatchQueue.main.async {
                 self.getImageBtn.isEnabled = true
@@ -106,7 +104,7 @@ class AddAnnotationViewController: UIViewController {
             }
         })
         task.resume()
-            }
+        }
     private func displayImageCollectionViewController(){
         goingForward = true
         performSegue(withIdentifier: "ImagesCollectionViewController", sender: self)
@@ -122,13 +120,7 @@ class AddAnnotationViewController: UIViewController {
         if segue.destination is ImagesCollectionViewController {
             let destination = segue.destination as? ImagesCollectionViewController
             destination?.imageUrlArr = imageUrlArr
-            destination?.annotationTitle = searchTF.text!
-        }
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        viewWillDisappear(animated)
-        if !goingForward {
-            MapViewController.annotationsDic.removeValue(forKey: searchTF.text!)
+            destination?.annotation = annotation
         }
     }
 }

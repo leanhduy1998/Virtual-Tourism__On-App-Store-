@@ -2,7 +2,7 @@
 //  Annotation+CoreDataProperties.swift
 //  Virtual Tourist
 //
-//  Created by Duy Le on 7/2/17.
+//  Created by Duy Le on 7/3/17.
 //  Copyright © 2017 Andrew Le. All rights reserved.
 //
 
@@ -17,7 +17,25 @@ extension Annotation {
     }
 
     @NSManaged public var latitude: Float
+    @NSManaged public var locationString: String?
     @NSManaged public var longitude: Float
-    @NSManaged public var image: Image?
+    @NSManaged public var images: NSSet?
+
+}
+
+// MARK: Generated accessors for images
+extension Annotation {
+
+    @objc(addImagesObject:)
+    @NSManaged public func addToImages(_ value: Image)
+
+    @objc(removeImagesObject:)
+    @NSManaged public func removeFromImages(_ value: Image)
+
+    @objc(addImages:)
+    @NSManaged public func addToImages(_ values: NSSet)
+
+    @objc(removeImages:)
+    @NSManaged public func removeFromImages(_ values: NSSet)
 
 }

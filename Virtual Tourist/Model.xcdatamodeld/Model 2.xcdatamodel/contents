@@ -7,7 +7,7 @@
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Image" inverseName="annotation" inverseEntity="Image" syncable="YES"/>
     </entity>
     <entity name="Image" representedClassName="Image" syncable="YES">
-        <attribute name="image" attributeType="Binary" syncable="YES"/>
+        <attribute name="image" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="locationString" attributeType="String" syncable="YES"/>
         <relationship name="annotation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Annotation" inverseName="images" inverseEntity="Annotation" syncable="YES"/>
     </entity>

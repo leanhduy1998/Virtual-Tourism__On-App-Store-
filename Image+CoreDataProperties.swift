@@ -2,7 +2,7 @@
 //  Image+CoreDataProperties.swift
 //  Virtual Tourist
 //
-//  Created by Duy Le on 7/2/17.
+//  Created by Duy Le on 7/3/17.
 //  Copyright © 2017 Andrew Le. All rights reserved.
 //
 
@@ -16,7 +16,8 @@ extension Image {
         return NSFetchRequest<Image>(entityName: "Image")
     }
 
-    @NSManaged public var imageURL: String?
+    @NSManaged public var image: NSData?
+    @NSManaged public var locationString: String?
     @NSManaged public var annotation: Annotation?
 
 }
