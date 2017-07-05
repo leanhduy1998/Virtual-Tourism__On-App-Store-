@@ -100,14 +100,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, NSFetchedResultsCo
         let annotation = view.annotation as? ImageAnnotation
         
     }
-    private func showCollection(){
-        
-    }
-    
-
-    
-    
-
 }
 
 

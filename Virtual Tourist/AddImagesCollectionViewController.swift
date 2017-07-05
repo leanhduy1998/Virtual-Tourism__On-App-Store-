@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ImagesCollectionViewController: UICollectionViewController {
+class AddImagesCollectionViewController: UICollectionViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     var imageUrlArr = [String]()
     var imageIndex = Int()

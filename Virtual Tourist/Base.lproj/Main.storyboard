@@ -88,6 +88,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Wtt-YJ-5HZ" id="zYD-Yt-0t7"/>
+                        <segue destination="Tbb-sG-jhw" kind="show" identifier="mapToShowImagesCollectionViewController" id="HqF-rz-5G6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -163,10 +164,76 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="oaX-i6-V9Q"/>
+                    <connections>
+                        <segue destination="Tbb-sG-jhw" kind="show" identifier="tableToShowImagesCollectionViewController" id="MNu-pB-3ym"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LGg-4O-WHO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="104.8" y="886.50674662668678"/>
+            <point key="canvasLocation" x="106" y="1093"/>
+        </scene>
+        <!--Show Images Collection View Controller-->
+        <scene sceneID="8dK-uD-12E">
+            <objects>
+                <collectionViewController id="Tbb-sG-jhw" customClass="ShowImagesCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ltb-Ru-GPt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iNB-e2-gwb">
+                            <size key="itemSize" width="135" height="135"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Nye-pw-IJC">
+                                <rect key="frame" x="0.0" y="0.0" width="135" height="135"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="135" height="135"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hrO-ME-xkE">
+                                            <rect key="frame" x="0.0" y="0.0" width="135" height="135"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="hrO-ME-xkE" secondAttribute="trailing" id="2jf-7I-ak2"/>
+                                    <constraint firstAttribute="bottom" secondItem="hrO-ME-xkE" secondAttribute="bottom" id="IG3-cX-OpK"/>
+                                    <constraint firstItem="hrO-ME-xkE" firstAttribute="leading" secondItem="Nye-pw-IJC" secondAttribute="leading" id="hhY-FN-DCa"/>
+                                    <constraint firstItem="hrO-ME-xkE" firstAttribute="top" secondItem="Nye-pw-IJC" secondAttribute="top" id="yRe-cZ-1pM"/>
+                                </constraints>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Tbb-sG-jhw" id="vI0-0g-taU"/>
+                            <outlet property="delegate" destination="Tbb-sG-jhw" id="Edz-pD-Ete"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PW9-CJ-z67" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="988" y="1093"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="NXD-lc-kqL">
+            <objects>
+                <viewController id="TQb-Nw-9j3" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="isv-KQ-pnE"/>
+                        <viewControllerLayoutGuide type="bottom" id="mM2-hC-S4v"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hGe-u0-qwb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c9l-Aq-18s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1836" y="888"/>
         </scene>
         <!--List-->
         <scene sceneID="id0-8M-feJ">
@@ -183,7 +250,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6x-4Q-KQJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-730" y="888"/>
+            <point key="canvasLocation" x="-729" y="1093"/>
         </scene>
         <!--Add Annotation View Controller-->
         <scene sceneID="8LN-ns-UsW">
@@ -288,11 +355,11 @@
             </objects>
             <point key="canvasLocation" x="988" y="138.98050974512745"/>
         </scene>
-        <!--Images Collection View Controller-->
+        <!--Add Images Collection View Controller-->
         <scene sceneID="2FW-cN-Ajg">
             <objects>
-                <collectionViewController id="hH1-fC-eIQ" customClass="ImagesCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="aQK-2F-gkm">
+                <collectionViewController id="hH1-fC-eIQ" customClass="AddImagesCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="aQK-2F-gkm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -392,4 +459,7 @@
     <resources>
         <image name="VirtualTourist_76" width="76" height="76"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="HqF-rz-5G6"/>
+    </inferredMetricsTieBreakers>
 </document>

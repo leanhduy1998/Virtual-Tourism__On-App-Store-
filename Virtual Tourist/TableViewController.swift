@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 class TableViewController: CoreDataTableViewController {
+    private var index: IndexPath!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,17 +34,10 @@ class TableViewController: CoreDataTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // This method must be implemented by our subclass. There's no way
-        // CoreDataTableViewController can know what type of cell we want to
-        // use.
-        
-        // Find the right notebook for this indexpath
         let annotation = fetchedResultsController!.object(at: indexPath) as! Annotation
         
-        // Create the cell
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
         
-        // Sync notebook -> cell
         cell?.locationLabel.text = annotation.locationString
         
         if(annotation.images?.count == 1) {
@@ -65,5 +59,18 @@ class TableViewController: CoreDataTableViewController {
         
         return cell!
     }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.index = indexPath
+        performSegue(withIdentifier: "tableToShowImagesCollectionViewController", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ShowImagesCollectionViewController {
+            let annotation = fetchedResultsController!.object(at: index) as! Annotation
+            destination.imageDataArr = (annotation.images?.allObjects as? [Data])!
+        }
+    }
+    
+    //
 
 }

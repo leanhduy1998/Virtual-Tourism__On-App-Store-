@@ -117,8 +117,8 @@ class AddAnnotationViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is ImagesCollectionViewController {
-            let destination = segue.destination as? ImagesCollectionViewController
+        if segue.destination is AddImagesCollectionViewController {
+            let destination = segue.destination as? AddImagesCollectionViewController
             destination?.imageUrlArr = imageUrlArr
             destination?.annotation = annotation
         }
