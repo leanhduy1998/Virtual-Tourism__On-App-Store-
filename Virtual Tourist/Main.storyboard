@@ -33,7 +33,7 @@
         <scene sceneID="QMP-Ko-vM2">
             <objects>
                 <navigationController id="BfZ-A5-PTz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="coz-rr-XpV"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="coz-rr-XpV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZPs-e9-CK0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -269,7 +269,7 @@
         <scene sceneID="id0-8M-feJ">
             <objects>
                 <navigationController id="Drj-09-UvP" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" id="4nb-wg-86V"/>
+                    <tabBarItem key="tabBarItem" title="List" image="table_30x30" id="4nb-wg-86V"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EVd-jh-Ekw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -492,6 +492,8 @@
     </scenes>
     <resources>
         <image name="VirtualTourist_76" width="76" height="76"/>
+        <image name="map" width="30" height="30"/>
+        <image name="table_30x30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="MNu-pB-3ym"/>
