@@ -9,11 +9,12 @@
 import UIKit
 import MapKit
 
-class AddAnnotationViewController: UIViewController {
+class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate {
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var getImageBtn: UIBarButtonItem!
-    @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     
     private var annotation = ImageAnnotation()
     private var imageUrlArr = [String]()
@@ -22,13 +23,41 @@ class AddAnnotationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
+        
+        let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation(gestureRecognizer:)))
+        uilgr.minimumPressDuration = 1.0
+        
+        mapView.addGestureRecognizer(uilgr)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isLoading(isLoading: false)
         getImageBtn.isEnabled = false
-        
+    }
+    
+    func addAnnotation(gestureRecognizer:UIGestureRecognizer){
+        if gestureRecognizer.state == UIGestureRecognizerState.began {
+            let touchPoint = gestureRecognizer.location(in: mapView)
+            let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            
+            annotation = ImageAnnotation()
+            annotation.coordinate = newCoordinates
+            annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
+            mapView.removeAnnotations(mapView.annotations)
+            mapView.addAnnotation(annotation)
+            
+            getImageBtn.isEnabled = true
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "AddAnnotationViewController")
+        pinAnnotationView.isDraggable = false
+        pinAnnotationView.canShowCallout = true
+        pinAnnotationView.animatesDrop = true
+    
+        return pinAnnotationView
     }
     
     @IBAction func searchBtnPressed(_ sender: Any) {
@@ -44,6 +73,8 @@ class AddAnnotationViewController: UIViewController {
                 self.present(alertController, animated: true, completion: nil)
                 return
             }
+            
+            self.mapView.removeAnnotations(self.mapView.annotations)
             
             self.annotation.title = self.searchTF.text
             self.annotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
@@ -104,16 +135,24 @@ class AddAnnotationViewController: UIViewController {
             }
         })
         task.resume()
-        }
+    }
     private func displayImageCollectionViewController(){
         goingForward = true
         performSegue(withIdentifier: "ImagesCollectionViewController", sender: self)
 
     }
     private func isLoading(isLoading: Bool){
-        loadingLabel.isHidden = !isLoading
+        activityIndicator.isHidden = !isLoading
         searchTF.isEnabled = !isLoading
         getImageBtn.isEnabled = !isLoading
+        view.isUserInteractionEnabled = !isLoading
+        
+        if isLoading {
+            activityIndicator.startAnimating()
+        }
+        else {
+            activityIndicator.stopAnimating()
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -123,4 +162,12 @@ class AddAnnotationViewController: UIViewController {
             destination?.annotation = annotation
         }
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        searchTF.resignFirstResponder()
+    }
+    
 }

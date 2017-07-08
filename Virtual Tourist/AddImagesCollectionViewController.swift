@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "AddImageCollectionCell"
 
 class AddImagesCollectionViewController: UICollectionViewController {
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
@@ -27,7 +27,7 @@ class AddImagesCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? AddImageCollectionViewCell
         
         let imageURL = URL(string: imageUrlArr[indexPath.row])
         if let imageData = try? Data(contentsOf: imageURL!) {
@@ -42,7 +42,7 @@ class AddImagesCollectionViewController: UICollectionViewController {
         performSegue(withIdentifier: "ImageDetailViewController", sender: self)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? ImageDetailViewController {
+        if let destination = segue.destination as? AddImageDetailViewController {
             let imageURL = URL(string: imageUrlArr[imageIndex])
             destination.imageURL = imageURL
             destination.annotation = annotation

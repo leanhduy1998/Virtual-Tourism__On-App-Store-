@@ -8,58 +8,105 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "ShowImageCollectionCell"
 
 
 class ShowImagesCollectionViewController: UICollectionViewController {
+    private let delegate = UIApplication.shared.delegate as? AppDelegate
+    
+    var annotationForDeleting = Annotation()
     var imageDataArr = [Data]()
+    private var indexPathForEdit: IndexPath!
+    private var imageDataForSegue = Data()
+    
+    
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        let space = 2 
+        let itemSize = (Double(view.frame.width) - (Double(space) * 2))/3
+        flowLayout.itemSize = CGSize(width: itemSize, height: itemSize)
+        flowLayout.minimumInteritemSpacing = CGFloat(space)
+        flowLayout.minimumLineSpacing = CGFloat(space)
+        
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(longPressGestureRecognizer:)))
+        view.addGestureRecognizer(longPressRecognizer)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
+            
+            let touchPoint = longPressGestureRecognizer.location(in: self.collectionView)
+            if let indexPath = self.collectionView?.indexPathForItem(at: touchPoint){
+                onLongPressed(indexPath: indexPath)
+            }
+        }
     }
-
-
-
-
-
+    private func onLongPressed(indexPath: IndexPath){
+        indexPathForEdit = indexPath
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Delete Picture", style: UIAlertActionStyle.default, handler: deletePicture))
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    private func deletePicture(action: UIAlertAction){
+        if (annotationForDeleting.images?.allObjects.count)! > 1 {
+            let imageForDelete = annotationForDeleting.images?.allObjects[indexPathForEdit.row] as? Image
+            
+            annotationForDeleting.removeFromImages(imageForDelete!)
+            
+            do {
+                try delegate?.stack.saveContext()
+            }
+            catch ((let error)){
+                fatalError(error.localizedDescription)
+            }
+        }
+        else {
+            let alertController = UIAlertController(title: "Cannot delete photo", message: "You need one picture to keep this location", preferredStyle: UIAlertControllerStyle.actionSheet)
+            alertController.addAction(UIAlertAction(title: "Delete Location", style: UIAlertActionStyle.default, handler: deleteLocation))
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        
+    }
+    private func deleteLocation(action: UIAlertAction){
+        delegate?.stack.context.delete(annotationForDeleting)
+        do {
+            try delegate?.stack.saveContext()
+        }
+        catch ((let error)){
+            fatalError(error.localizedDescription)
+        }
+        collectionView?.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return imageDataArr.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
-        return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ShowImagesCollectionViewCell
+        cell?.imageView.image = UIImage(data: imageDataArr[indexPath.row])
+
+        return cell!
     }
 
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        imageDataForSegue = imageDataArr[indexPath.row]
+        performSegue(withIdentifier: "ShowImageDetailViewController", sender: self)
     }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination =  segue.destination as? ShowImageDetailViewController {
+            destination.imageData = imageDataForSegue
+        }
     }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }
