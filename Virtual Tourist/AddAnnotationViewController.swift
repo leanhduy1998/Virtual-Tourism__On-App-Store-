@@ -8,17 +8,28 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate {
+class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate,NSFetchedResultsControllerDelegate {
     @IBOutlet weak var searchTF: UITextField!
-    @IBOutlet weak var getImageBtn: UIBarButtonItem!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     private var annotation = ImageAnnotation()
     private var imageUrlArr = [String]()
     private var goingForward: Bool = false
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    private var imageDataArrForSegue = [Data]()
+    private var annotationForSegue = Annotation()
+    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isLoading(isLoading: false)
+        //  deletaAllDataDebug()
+        initializeFetchedResultsController()
+        loadAnnotation()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +40,129 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
         
         mapView.addGestureRecognizer(uilgr)
     }
+
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        isLoading(isLoading: false)
-        getImageBtn.isEnabled = false
+    private func loadAnnotation(){
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let annotationArr = (delegate.fetchedResultsController.fetchedObjects as? [Annotation])!
+        
+        for annotation in annotationArr {
+            let cpa = ImageAnnotation()
+            cpa.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(annotation.latitude), longitude: CLLocationDegrees(annotation.longitude))
+            cpa.title = annotation.locationString
+            
+            let imageArr = annotation.images?.allObjects as? [Image]
+            
+            var imageDataArr = [Data]()
+            
+            if (imageArr?.count)! > 0 {
+                for image in imageArr! {
+                    imageDataArr.append(image.image! as Data)
+                }
+            }
+            
+            cpa.imageData = imageDataArr
+            mapView.addAnnotation(cpa)
+        }
     }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        var haveImage = false
+        
+        let cpa = annotation as? ImageAnnotation
+        
+        var image = UIImage()
+        if (cpa?.imageData != nil && ( cpa?.imageData.count)! > 0) {
+            image = UIImage(data: (cpa?.imageData[0])!)!
+            haveImage = true
+        }
+        
+        
+        let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MapViewController")
+        
+        UIGraphicsBeginImageContext(CGSize(width: 150, height: 150))
+        let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: 150, height: 150
+        ))
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        
+        let imageView = UIImageView(image: newImage)
+        
+        pinAnnotationView.isDraggable = false
+        pinAnnotationView.canShowCallout = true
+        pinAnnotationView.animatesDrop = true
+        
+        if haveImage == true {
+            pinAnnotationView.detailCalloutAccessoryView = imageView
+            
+            let collectionBtn = UIButton()
+            collectionBtn.frame.size.width = 30
+            collectionBtn.frame.size.height = 30
+            collectionBtn.setImage(UIImage(named: "table_30x30"), for: .normal)
+            
+            let deleteBtn = UIButton()
+            deleteBtn.frame.size.width = 30
+            deleteBtn.frame.size.height = 30
+            deleteBtn.setImage(UIImage(named: "delete"), for: .normal)
+            
+            pinAnnotationView.rightCalloutAccessoryView = collectionBtn
+            pinAnnotationView.leftCalloutAccessoryView = deleteBtn
+        }
+        else {
+            let addBtn = UIButton()
+            addBtn.frame.size.width = 30
+            addBtn.frame.size.height = 30
+            addBtn.setTitle("Add Image", for: .normal)
+            addBtn.setImage(UIImage(named: "camera"), for: .normal)
+            
+            pinAnnotationView.rightCalloutAccessoryView = addBtn
+        }
+        
+        return pinAnnotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        let annotationArr = (delegate.fetchedResultsController.fetchedObjects as? [Annotation])!
+        let currentAnnotation = view.annotation
+        
+        // if collection Btn clicked
+        if (control as? UIButton)?.currentImage == UIImage(named: "table_30x30") {
+            let annotation = view.annotation as? ImageAnnotation
+            imageDataArrForSegue = (annotation?.imageData)!
+            
+            for annotation in annotationArr {
+                if annotation.latitude == Float((currentAnnotation?.coordinate.latitude)!) && annotation.longitude == Float((currentAnnotation?.coordinate.longitude)!)  {
+                    annotationForSegue = annotation
+                }
+            }
+            performSegue(withIdentifier: "mapToShowImagesCollectionViewController", sender: self)
+        }
+            // if delete btn clicked
+        else if (control as? UIButton)?.currentImage == UIImage(named: "delete") {
+            for annotation in annotationArr {
+                if annotation.latitude == Float((currentAnnotation?.coordinate.latitude)!) && annotation.longitude == Float((currentAnnotation?.coordinate.longitude)!)  {
+                    delegate.stack.context.delete(annotation)
+                    mapView.removeAnnotation(view.annotation!)
+                }
+            }
+            do {
+                try delegate.stack.saveContext()
+            }
+            catch ((let error)){
+                fatalError(error.localizedDescription)
+            }
+        }
+        else {
+            annotation = currentAnnotation as! ImageAnnotation
+            displayAddImageCollectionViewController()
+        }
+    }
+
     func addAnnotation(gestureRecognizer:UIGestureRecognizer){
         if gestureRecognizer.state == UIGestureRecognizerState.began {
             let touchPoint = gestureRecognizer.location(in: mapView)
@@ -43,22 +170,16 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
             
             annotation = ImageAnnotation()
             annotation.coordinate = newCoordinates
+            
             annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
-            mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotation(annotation)
             
-            getImageBtn.isEnabled = true
+            let annotationCoreData = Annotation(locationString: annotation.title!, latitude: Float(annotation.coordinate.latitude), longitude: Float(annotation.coordinate.longitude), context: (delegate.stack.context))
+            self.delegate.stack.context.insert(annotationCoreData)
+            self.saveToCoreData()
         }
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "AddAnnotationViewController")
-        pinAnnotationView.isDraggable = false
-        pinAnnotationView.canShowCallout = true
-        pinAnnotationView.animatesDrop = true
-    
-        return pinAnnotationView
-    }
     
     @IBAction func searchBtnPressed(_ sender: Any) {
         let localSearchRequest = MKLocalSearchRequest()
@@ -74,100 +195,40 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
                 return
             }
             
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            
             self.annotation.title = self.searchTF.text
             self.annotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
             self.mapView.addAnnotation(self.annotation)
             
+            
             DispatchQueue.main.async {
-                self.getImageBtn.isEnabled = true
+                let annotationCoreData = Annotation(locationString: self.searchTF.text!, latitude: Float(self.annotation.coordinate.latitude), longitude: Float(self.annotation.coordinate.longitude), context: (self.delegate.stack.context))
+                self.delegate.stack.context.insert(annotationCoreData)
+                self.saveToCoreData()
                 self.refreshMapView()
             }
         }
     }
 
-    func refreshMapView(){
-        let arr = mapView.annotations
-        mapView.removeAnnotations(arr)
-        mapView.addAnnotations(arr)
-    }
-    @IBAction func getImageBtnPressed(_ sender: Any) {
-        isLoading(isLoading: true)
-        let latitude = Float(annotation.coordinate.latitude)
-        let longitude = Float(annotation.coordinate.longitude)
-        
-        let request = NSMutableURLRequest(url: FlickrClient.searchImage(latitude: latitude, longitude: longitude))
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: (request as? URLRequest)!, completionHandler: { (data, respond, error) in
-            if error == nil {
-                var parsedData: [String:AnyObject] = [:]
-                do {
-                    try parsedData = (JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:AnyObject])!
-                }
-                catch {
-                    print("parse data err")
-                    print(error.localizedDescription)
-                }
-                guard let photos = parsedData["photos"] as? [String:AnyObject] else {
-                    print("photos err")
-                    return
-                }
-                guard let photoArr = photos["photo"] as? [[String:AnyObject]] else {
-                    print("photoArr err")
-                    return
-                }
-                
-                for photo in photoArr {
-                    guard let url = photo["url_m"] as? String else {
-                        print("url err")
-                        return
-                    }
-                    self.imageUrlArr.append(url)
-                }
-            
-                self.isLoading(isLoading: false)
-                self.displayImageCollectionViewController()
-            }
-            else {
-                print("task err")
-            }
-        })
-        task.resume()
-    }
-    private func displayImageCollectionViewController(){
+    func displayAddImageCollectionViewController(){
         goingForward = true
-        performSegue(withIdentifier: "ImagesCollectionViewController", sender: self)
-
+        performSegue(withIdentifier: "AddImagesCollectionViewController", sender: self)
     }
-    private func isLoading(isLoading: Bool){
-        activityIndicator.isHidden = !isLoading
-        searchTF.isEnabled = !isLoading
-        getImageBtn.isEnabled = !isLoading
-        view.isUserInteractionEnabled = !isLoading
-        
-        if isLoading {
-            activityIndicator.startAnimating()
-        }
-        else {
-            activityIndicator.stopAnimating()
-        }
-    }
-
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is AddImagesCollectionViewController {
+        if let destination = segue.destination as? ShowImagesCollectionViewController {
+            destination.imageDataArr = imageDataArrForSegue
+            destination.annotationForDeleting = annotationForSegue
+        }
+        else if segue.destination is AddImagesCollectionViewController {
             let destination = segue.destination as? AddImagesCollectionViewController
             destination?.imageUrlArr = imageUrlArr
             destination?.annotation = annotation
         }
     }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        searchTF.resignFirstResponder()
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
 }

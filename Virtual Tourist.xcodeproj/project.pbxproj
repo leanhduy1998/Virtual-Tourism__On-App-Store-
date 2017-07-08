@@ -14,8 +14,8 @@
 		24211C3F1F0C5AD300E3317A /* ShowImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24211C3E1F0C5AD300E3317A /* ShowImagesCollectionViewController.swift */; };
 		244E6CE81F0F504400EBF55D /* ShowImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E6CE71F0F504400EBF55D /* ShowImageDetailViewController.swift */; };
 		244E6CEC1F10252600EBF55D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 244E6CEB1F10252600EBF55D /* Main.storyboard */; };
+		244E6CF31F10BC0500EBF55D /* AddAnnotationViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E6CF21F10BC0500EBF55D /* AddAnnotationViewControllerExtension.swift */; };
 		245DBA171F046C1C00CDE0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DBA161F046C1C00CDE0C0 /* AppDelegate.swift */; };
-		245DBA191F046C1C00CDE0C0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DBA181F046C1C00CDE0C0 /* MapViewController.swift */; };
 		245DBA1E1F046C1C00CDE0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 245DBA1D1F046C1C00CDE0C0 /* Assets.xcassets */; };
 		245DBA211F046C1C00CDE0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 245DBA1F1F046C1C00CDE0C0 /* LaunchScreen.storyboard */; };
 		245DBA2C1F046C1C00CDE0C0 /* Virtual_TouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245DBA2B1F046C1C00CDE0C0 /* Virtual_TouristTests.swift */; };
@@ -62,9 +62,10 @@
 		24211C3E1F0C5AD300E3317A /* ShowImagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowImagesCollectionViewController.swift; sourceTree = "<group>"; };
 		244E6CE71F0F504400EBF55D /* ShowImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowImageDetailViewController.swift; sourceTree = "<group>"; };
 		244E6CEB1F10252600EBF55D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		244E6CF21F10BC0500EBF55D /* AddAnnotationViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnotationViewControllerExtension.swift; sourceTree = "<group>"; };
+		244E6CF41F10C50500EBF55D /* Model 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 3.xcdatamodel"; sourceTree = "<group>"; };
 		245DBA131F046C1C00CDE0C0 /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		245DBA161F046C1C00CDE0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		245DBA181F046C1C00CDE0C0 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		245DBA1D1F046C1C00CDE0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		245DBA201F046C1C00CDE0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		245DBA221F046C1C00CDE0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -150,8 +151,8 @@
 		24342E241F05CBA800C541DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				244E6CF11F10BBF000EBF55D /* Extension */,
 				24617FA41F09AAB0001C433F /* Cells */,
-				245DBA181F046C1C00CDE0C0 /* MapViewController.swift */,
 				24739BF61F05E22D008F05FE /* AddAnnotationViewController.swift */,
 				24739BF81F06D1F9008F05FE /* AddImagesCollectionViewController.swift */,
 				24617F831F0849C0001C433F /* AddImageDetailViewController.swift */,
@@ -160,6 +161,14 @@
 				244E6CE71F0F504400EBF55D /* ShowImageDetailViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		244E6CF11F10BBF000EBF55D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				244E6CF21F10BC0500EBF55D /* AddAnnotationViewControllerExtension.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		245DBA0A1F046C1C00CDE0C0 = {
@@ -403,8 +412,8 @@
 			files = (
 				24617FA01F098B9B001C433F /* Annotation.swift in Sources */,
 				24739BF91F06D1F9008F05FE /* AddImagesCollectionViewController.swift in Sources */,
+				244E6CF31F10BC0500EBF55D /* AddAnnotationViewControllerExtension.swift in Sources */,
 				2413F2111F0D7704000FA94D /* ShowImagesCollectionViewCell.swift in Sources */,
-				245DBA191F046C1C00CDE0C0 /* MapViewController.swift in Sources */,
 				244E6CE81F0F504400EBF55D /* ShowImageDetailViewController.swift in Sources */,
 				24739BFC1F06DD3A008F05FE /* FlickrConstant.swift in Sources */,
 				24211C3F1F0C5AD300E3317A /* ShowImagesCollectionViewController.swift in Sources */,
@@ -692,6 +701,7 @@
 		24617F871F097DF1001C433F /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				244E6CF41F10C50500EBF55D /* Model 3.xcdatamodel */,
 				24211C361F0AF8F800E3317A /* Model 2.xcdatamodel */,
 				24617F881F097DF1001C433F /* Model.xcdatamodel */,
 			);

@@ -17,9 +17,52 @@ class AddImagesCollectionViewController: UICollectionViewController {
     var annotation = ImageAnnotation()
 
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
+        
+    }
+    func loadData(){
+        let latitude = Float(annotation.coordinate.latitude)
+        let longitude = Float(annotation.coordinate.longitude)
+        
+        let request = NSMutableURLRequest(url: FlickrClient.searchImage(latitude: latitude, longitude: longitude))
+        let session = URLSession.shared
+        
+        let task = session.dataTask(with: (request as? URLRequest)!, completionHandler: { (data, respond, error) in
+            if error == nil {
+                var parsedData: [String:AnyObject] = [:]
+                do {
+                    try parsedData = (JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:AnyObject])!
+                }
+                catch {
+                    print("parse data err")
+                    print(error.localizedDescription)
+                }
+                guard let photos = parsedData["photos"] as? [String:AnyObject] else {
+                    print("photos err")
+                    return
+                }
+                guard let photoArr = photos["photo"] as? [[String:AnyObject]] else {
+                    print("photoArr err")
+                    return
+                }
+                
+                for photo in photoArr {
+                    guard let url = photo["url_m"] as? String else {
+                        print("url err")
+                        return
+                    }
+                    self.imageUrlArr.append(url)
+                }
+                
+                self.collectionView?.reloadData()
+            }
+            else {
+                print("task err")
+            }
+        })
+        task.resume()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

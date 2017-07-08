@@ -35,7 +35,7 @@ class AddImageDetailViewController: UIViewController {
             
             let image = Image(imageData: imageData,locationString: title!, context: (stack?.context)!)
             
-            if (annotationArr.count > 0) {
+   
                 for tempAnnotation in annotationArr {
                     if tempAnnotation.latitude == latitude && tempAnnotation.longitude == longitude {
                         image.annotation = tempAnnotation
@@ -47,11 +47,8 @@ class AddImageDetailViewController: UIViewController {
                         break
                     }
                 }
-            }
-            else {
-                let annotationCoreData = Annotation(locationString: title!, latitude: Float(latitude), longitude: Float(longitude), context: (stack?.context)!)
-                image.annotation = annotationCoreData
-            }
+            
+            
             
             do {
                 try stack?.saveContext()
