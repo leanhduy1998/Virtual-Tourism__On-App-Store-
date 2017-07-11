@@ -39,7 +39,7 @@ class AddImagesCollectionViewController: UICollectionViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       // tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func fireTimerCheckingDownloadStatus(){

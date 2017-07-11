@@ -233,10 +233,10 @@
             </objects>
             <point key="canvasLocation" x="-729" y="1093"/>
         </scene>
-        <!--Add Annotation View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="8LN-ns-UsW">
             <objects>
-                <viewController id="juf-bY-0e7" customClass="AddAnnotationViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="juf-bY-0e7" customClass="MapViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fZM-pf-eVc"/>
                         <viewControllerLayoutGuide type="bottom" id="AHY-6r-SL8"/>
@@ -322,7 +322,7 @@
         <scene sceneID="2FW-cN-Ajg">
             <objects>
                 <collectionViewController id="hH1-fC-eIQ" customClass="AddImagesCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="aQK-2F-gkm">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="aQK-2F-gkm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -393,7 +393,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sXn-tq-rrl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1245" y="-628"/>
+            <point key="canvasLocation" x="1246" y="-785"/>
         </scene>
     </scenes>
     <resources>
@@ -401,6 +401,6 @@
         <image name="table_30x30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5lN-Wf-apt"/>
+        <segue reference="C9H-HJ-n7c"/>
     </inferredMetricsTieBreakers>
 </document>

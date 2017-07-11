@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate,NSFetchedResultsControllerDelegate {
+class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate,NSFetchedResultsControllerDelegate {
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     
@@ -31,7 +31,7 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        deletaAllDataDebug()
+     //   deletaAllDataDebug()
         
         self.tabBarController?.tabBar.isHidden = true
         

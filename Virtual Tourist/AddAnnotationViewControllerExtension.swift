@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-extension AddAnnotationViewController {
+extension MapViewController {
     
     
     func isLoading(isLoading: Bool){

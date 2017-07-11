@@ -27,7 +27,7 @@
 		24617FA61F09AAD1001C433F /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617FA51F09AAD1001C433F /* TableViewController.swift */; };
 		24617FA81F09AB01001C433F /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617FA71F09AB01001C433F /* TableViewCell.swift */; };
 		24617FAE1F09B1E1001C433F /* CoreDataTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24617FAD1F09B1E1001C433F /* CoreDataTableViewController.swift */; };
-		24739BF71F05E22D008F05FE /* AddAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BF61F05E22D008F05FE /* AddAnnotationViewController.swift */; };
+		24739BF71F05E22D008F05FE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BF61F05E22D008F05FE /* MapViewController.swift */; };
 		24739BF91F06D1F9008F05FE /* AddImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BF81F06D1F9008F05FE /* AddImagesCollectionViewController.swift */; };
 		24739BFC1F06DD3A008F05FE /* FlickrConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BFB1F06DD3A008F05FE /* FlickrConstant.swift */; };
 		24739BFE1F06E841008F05FE /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24739BFD1F06E841008F05FE /* FlickrClient.swift */; };
@@ -82,7 +82,7 @@
 		24617FA51F09AAD1001C433F /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		24617FA71F09AB01001C433F /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		24617FAD1F09B1E1001C433F /* CoreDataTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTableViewController.swift; sourceTree = "<group>"; };
-		24739BF61F05E22D008F05FE /* AddAnnotationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnotationViewController.swift; sourceTree = "<group>"; };
+		24739BF61F05E22D008F05FE /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		24739BF81F06D1F9008F05FE /* AddImagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImagesCollectionViewController.swift; sourceTree = "<group>"; };
 		24739BFB1F06DD3A008F05FE /* FlickrConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstant.swift; sourceTree = "<group>"; };
 		24739BFD1F06E841008F05FE /* FlickrClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 		24342E241F05CBA800C541DA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				24739BF61F05E22D008F05FE /* AddAnnotationViewController.swift */,
+				24739BF61F05E22D008F05FE /* MapViewController.swift */,
 				24739BF81F06D1F9008F05FE /* AddImagesCollectionViewController.swift */,
 				24617FA51F09AAD1001C433F /* TableViewController.swift */,
 				24211C3E1F0C5AD300E3317A /* ShowImagesCollectionViewController.swift */,
@@ -424,7 +424,7 @@
 				24FF56811F145C21003C9B58 /* Annotation+CoreDataProperties.swift in Sources */,
 				24617F821F083514001C433F /* AddImageCollectionViewCell.swift in Sources */,
 				245DBA171F046C1C00CDE0C0 /* AppDelegate.swift in Sources */,
-				24739BF71F05E22D008F05FE /* AddAnnotationViewController.swift in Sources */,
+				24739BF71F05E22D008F05FE /* MapViewController.swift in Sources */,
 				24617FAE1F09B1E1001C433F /* CoreDataTableViewController.swift in Sources */,
 				24617F8B1F0988FD001C433F /* CoreDataStack.swift in Sources */,
 				24739BFE1F06E841008F05FE /* FlickrClient.swift in Sources */,
