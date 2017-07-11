@@ -29,7 +29,7 @@ extension AddAnnotationViewController {
         mapView.removeAnnotations(arr)
         mapView.addAnnotations(arr)
     }
-    private func deletaAllDataDebug(){
+    func deletaAllDataDebug(){
         do {
             try delegate.stack.dropAllData()
         }
@@ -37,22 +37,8 @@ extension AddAnnotationViewController {
             fatalError()
         }
     }
-    func initializeFetchedResultsController() {
-        let stack = delegate.stack
-        
-        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotation")
-        fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true),
-                              NSSortDescriptor(key: "longitude", ascending: false),NSSortDescriptor(key:"locationString",ascending: false)]
-        
-        delegate.fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        do {
-            try delegate.fetchedResultsController.performFetch()
-        } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
-        }
-    }
-     func saveToCoreData(){
+
+    func saveToCoreData(){
         do {
             try delegate.stack.saveContext()
         }

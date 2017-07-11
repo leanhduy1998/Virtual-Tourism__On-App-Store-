@@ -2,7 +2,7 @@
 //  Annotation+CoreDataProperties.swift
 //  Virtual Tourist
 //
-//  Created by Duy Le on 7/3/17.
+//  Created by Duy Le on 7/10/17.
 //  Copyright © 2017 Andrew Le. All rights reserved.
 //
 
@@ -19,6 +19,7 @@ extension Annotation {
     @NSManaged public var latitude: Float
     @NSManaged public var locationString: String?
     @NSManaged public var longitude: Float
+    @NSManaged public var page: String?
     @NSManaged public var images: NSSet?
 
 }

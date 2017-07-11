@@ -24,6 +24,8 @@ class FlickrConstant {
         static let Format = "format"
         static let Extra = "extras"
         static let NoJSONCallback = "nojsoncallback"
+        static let perPage = "per_page"
+        static let Page = "page"
     }
     struct RespondParameter {
         static let REST = "rest"

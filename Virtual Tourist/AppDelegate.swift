@@ -19,7 +19,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
 
-
+    func initializeFetchedResultsController() {
+        let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Annotation")
+        fr.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true),
+                              NSSortDescriptor(key: "longitude", ascending: false),NSSortDescriptor(key:"locationString",ascending: false)]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: stack.context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
+    }
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         return true
     }

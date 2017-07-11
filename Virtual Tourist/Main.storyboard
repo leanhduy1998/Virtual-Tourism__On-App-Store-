@@ -39,7 +39,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="juf-bY-0e7" kind="relationship" relationship="rootViewController" id="kz2-ky-Lqc"/>
+                        <segue destination="juf-bY-0e7" kind="relationship" relationship="rootViewController" id="Wyl-bA-gSS"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQP-yJ-Zpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -308,12 +308,10 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="nlj-2X-a3P"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="kZg-pg-BPR" id="gOs-KY-iq8"/>
                         <outlet property="searchTF" destination="Vf3-p7-6i5" id="qdN-0P-fJc"/>
                         <segue destination="hH1-fC-eIQ" kind="show" identifier="AddImagesCollectionViewController" id="5lN-Wf-apt"/>
-                        <segue destination="Tbb-sG-jhw" kind="show" identifier="mapToShowImagesCollectionViewController" id="Hpy-vK-otl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bah-3H-oTP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -344,6 +342,7 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QKL-mT-tdL">
                                             <rect key="frame" x="4" y="4" width="367" height="464"/>
+                                            <color key="backgroundColor" red="0.93323183060000003" green="0.93339174989999996" blue="0.93322181699999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
                                     </subviews>
                                 </view>
@@ -363,62 +362,38 @@
                             <outlet property="delegate" destination="hH1-fC-eIQ" id="RPu-zR-t0P"/>
                         </connections>
                     </collectionView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="9kW-5d-S3m">
+                        <barButtonItem key="rightBarButtonItem" title="More Option" id="bEH-Cd-NMb">
+                            <connections>
+                                <action selector="moreOptionBtnPressed:" destination="hH1-fC-eIQ" id="M9R-ed-shZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="flowLayout" destination="K7n-xr-YWf" id="WB4-Vp-fO6"/>
-                        <segue destination="rO8-5F-yYb" kind="show" identifier="ImageDetailViewController" id="qCl-5p-Hcp"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EWC-SL-4P3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1246" y="139"/>
         </scene>
-        <!--Add Image Detail View Controller-->
-        <scene sceneID="s8S-5i-Q5E">
+        <!--Navigation Controller-->
+        <scene sceneID="yJA-1x-xbn">
             <objects>
-                <viewController id="rO8-5F-yYb" customClass="AddImageDetailViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="YjY-A7-L5y"/>
-                        <viewControllerLayoutGuide type="bottom" id="jqP-wz-UJW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XVT-py-R0L">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B8R-yw-7st">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
-                            </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2u6-2q-57G">
-                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="NHX-pB-67Q"/>
-                                    <barButtonItem title="Add Picture to Your Collection" id="OPJ-Tc-AGU">
-                                        <connections>
-                                            <action selector="addToCollectionBtnPressed:" destination="rO8-5F-yYb" id="4sY-FY-w4T"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Vgb-38-1p7"/>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="B8R-yw-7st" firstAttribute="top" secondItem="YjY-A7-L5y" secondAttribute="bottom" id="DYn-Q0-QPG"/>
-                            <constraint firstItem="jqP-wz-UJW" firstAttribute="top" secondItem="B8R-yw-7st" secondAttribute="bottom" id="PXf-gL-brj"/>
-                            <constraint firstAttribute="bottom" secondItem="2u6-2q-57G" secondAttribute="bottom" id="cRU-ts-D9B"/>
-                            <constraint firstAttribute="trailing" secondItem="B8R-yw-7st" secondAttribute="trailing" id="ihs-hC-rol"/>
-                            <constraint firstItem="B8R-yw-7st" firstAttribute="leading" secondItem="XVT-py-R0L" secondAttribute="leading" id="lPQ-uN-Ib5"/>
-                            <constraint firstAttribute="trailing" secondItem="2u6-2q-57G" secondAttribute="trailing" id="nhy-gM-d2g"/>
-                            <constraint firstItem="2u6-2q-57G" firstAttribute="leading" secondItem="XVT-py-R0L" secondAttribute="leading" id="zDe-th-nXE"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
+                <navigationController id="zPn-w7-2WU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aWv-hW-nMU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
                     <connections>
-                        <outlet property="imageView" destination="B8R-yw-7st" id="L3M-yt-TSd"/>
+                        <segue destination="hH1-fC-eIQ" kind="relationship" relationship="rootViewController" id="C9H-HJ-n7c"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zzb-1T-Klh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sXn-tq-rrl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2280" y="139"/>
+            <point key="canvasLocation" x="1245" y="-628"/>
         </scene>
     </scenes>
     <resources>
@@ -426,6 +401,6 @@
         <image name="table_30x30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Hpy-vK-otl"/>
+        <segue reference="5lN-Wf-apt"/>
     </inferredMetricsTieBreakers>
 </document>

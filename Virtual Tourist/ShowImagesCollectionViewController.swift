@@ -54,26 +54,16 @@ class ShowImagesCollectionViewController: UICollectionViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     private func deletePicture(action: UIAlertAction){
-        if (annotationForDeleting.images?.allObjects.count)! > 1 {
-            let imageForDelete = annotationForDeleting.images?.allObjects[indexPathForEdit.row] as? Image
-            
-            annotationForDeleting.removeFromImages(imageForDelete!)
-            
-            do {
-                try delegate?.stack.saveContext()
-            }
-            catch ((let error)){
-                fatalError(error.localizedDescription)
-            }
-        }
-        else {
-            let alertController = UIAlertController(title: "Cannot delete photo", message: "You need one picture to keep this location", preferredStyle: UIAlertControllerStyle.actionSheet)
-            alertController.addAction(UIAlertAction(title: "Delete Location", style: UIAlertActionStyle.default, handler: deleteLocation))
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
-        }
+        let imageForDelete = annotationForDeleting.images?.allObjects[indexPathForEdit.row] as? Image
         
+        annotationForDeleting.removeFromImages(imageForDelete!)
         
+        do {
+            try delegate?.stack.saveContext()
+        }
+        catch ((let error)){
+            fatalError(error.localizedDescription)
+        }
     }
     private func deleteLocation(action: UIAlertAction){
         delegate?.stack.context.delete(annotationForDeleting)

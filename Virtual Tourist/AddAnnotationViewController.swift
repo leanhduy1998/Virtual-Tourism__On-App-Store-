@@ -16,32 +16,32 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
     
     
     private var annotation = ImageAnnotation()
-    private var imageUrlArr = [String]()
-    private var goingForward: Bool = false
     let delegate = UIApplication.shared.delegate as! AppDelegate
-    private var imageDataArrForSegue = [Data]()
     private var annotationForSegue = Annotation()
     
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isLoading(isLoading: false)
-        //  deletaAllDataDebug()
-        initializeFetchedResultsController()
+      
+        self.tabBarController?.tabBar.isHidden = false
+        delegate.initializeFetchedResultsController()
         loadAnnotation()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        deletaAllDataDebug()
+        
         self.tabBarController?.tabBar.isHidden = true
         
-        let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation(gestureRecognizer:)))
+        let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotationFromHold(gestureRecognizer:)))
         uilgr.minimumPressDuration = 1.0
         
         mapView.addGestureRecognizer(uilgr)
     }
-
     
+
     private func loadAnnotation(){
         mapView.removeAnnotations(mapView.annotations)
         
@@ -51,6 +51,7 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
             let cpa = ImageAnnotation()
             cpa.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(annotation.latitude), longitude: CLLocationDegrees(annotation.longitude))
             cpa.title = annotation.locationString
+            
             
             let imageArr = annotation.images?.allObjects as? [Image]
             
@@ -68,15 +69,11 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        var haveImage = false
-        
         let cpa = annotation as? ImageAnnotation
         
         var image = UIImage()
         if (cpa?.imageData != nil && ( cpa?.imageData.count)! > 0) {
             image = UIImage(data: (cpa?.imageData[0])!)!
-            haveImage = true
         }
         
         
@@ -95,32 +92,22 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
         pinAnnotationView.isDraggable = false
         pinAnnotationView.canShowCallout = true
         pinAnnotationView.animatesDrop = true
+        pinAnnotationView.detailCalloutAccessoryView = imageView
         
-        if haveImage == true {
-            pinAnnotationView.detailCalloutAccessoryView = imageView
-            
-            let collectionBtn = UIButton()
-            collectionBtn.frame.size.width = 30
-            collectionBtn.frame.size.height = 30
-            collectionBtn.setImage(UIImage(named: "table_30x30"), for: .normal)
-            
-            let deleteBtn = UIButton()
-            deleteBtn.frame.size.width = 30
-            deleteBtn.frame.size.height = 30
-            deleteBtn.setImage(UIImage(named: "delete"), for: .normal)
-            
-            pinAnnotationView.rightCalloutAccessoryView = collectionBtn
-            pinAnnotationView.leftCalloutAccessoryView = deleteBtn
-        }
-        else {
-            let addBtn = UIButton()
-            addBtn.frame.size.width = 30
-            addBtn.frame.size.height = 30
-            addBtn.setTitle("Add Image", for: .normal)
-            addBtn.setImage(UIImage(named: "camera"), for: .normal)
-            
-            pinAnnotationView.rightCalloutAccessoryView = addBtn
-        }
+        let addBtn = UIButton()
+        addBtn.frame.size.width = 30
+        addBtn.frame.size.height = 30
+        addBtn.setTitle("Add Image", for: .normal)
+        addBtn.setImage(UIImage(named: "camera"), for: .normal)
+        
+        let deleteBtn = UIButton()
+        deleteBtn.frame.size.width = 30
+        deleteBtn.frame.size.height = 30
+        deleteBtn.setImage(UIImage(named: "delete"), for: .normal)
+        
+        
+        pinAnnotationView.rightCalloutAccessoryView = addBtn
+        pinAnnotationView.leftCalloutAccessoryView = deleteBtn
         
         return pinAnnotationView
     }
@@ -128,12 +115,12 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         let annotationArr = (delegate.fetchedResultsController.fetchedObjects as? [Annotation])!
-        let currentAnnotation = view.annotation
+        let currentAnnotation = view.annotation as? ImageAnnotation
         
+        /*
         // if collection Btn clicked
         if (control as? UIButton)?.currentImage == UIImage(named: "table_30x30") {
-            let annotation = view.annotation as? ImageAnnotation
-            imageDataArrForSegue = (annotation?.imageData)!
+            
             
             for annotation in annotationArr {
                 if annotation.latitude == Float((currentAnnotation?.coordinate.latitude)!) && annotation.longitude == Float((currentAnnotation?.coordinate.longitude)!)  {
@@ -142,8 +129,9 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
             }
             performSegue(withIdentifier: "mapToShowImagesCollectionViewController", sender: self)
         }
+ */
             // if delete btn clicked
-        else if (control as? UIButton)?.currentImage == UIImage(named: "delete") {
+        if (control as? UIButton)?.currentImage == UIImage(named: "delete") {
             for annotation in annotationArr {
                 if annotation.latitude == Float((currentAnnotation?.coordinate.latitude)!) && annotation.longitude == Float((currentAnnotation?.coordinate.longitude)!)  {
                     delegate.stack.context.delete(annotation)
@@ -158,12 +146,12 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
             }
         }
         else {
-            annotation = currentAnnotation as! ImageAnnotation
-            displayAddImageCollectionViewController()
+            annotation = currentAnnotation!
+            performSegue(withIdentifier: "AddImagesCollectionViewController", sender: self)
         }
     }
 
-    func addAnnotation(gestureRecognizer:UIGestureRecognizer){
+    func addAnnotationFromHold(gestureRecognizer:UIGestureRecognizer){
         if gestureRecognizer.state == UIGestureRecognizerState.began {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -174,9 +162,29 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
             annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
             mapView.addAnnotation(annotation)
             
-            let annotationCoreData = Annotation(locationString: annotation.title!, latitude: Float(annotation.coordinate.latitude), longitude: Float(annotation.coordinate.longitude), context: (delegate.stack.context))
-            self.delegate.stack.context.insert(annotationCoreData)
-            self.saveToCoreData()
+            CoreDataDownloadImage.downloadURLs(title: self.annotation.title!, latitude: Float(self.annotation.coordinate.latitude), longitude: Float(self.annotation.coordinate.longitude), page: 1)
+            AddImagesCollectionViewController.downloadingImageComplete = false
+            
+            DispatchQueue.main.async {
+                self.addAnnotationToCoreData()
+                self.refreshMapView()
+            }
+        }
+    }
+    
+    private func addAnnotationToCoreData(){
+        let annotationArr = (delegate.fetchedResultsController.fetchedObjects as? [Annotation])!
+        
+        var found = false
+        for annotionData in annotationArr {
+            if annotionData.latitude == Float(annotation.coordinate.latitude) && annotionData.longitude == Float(annotation.coordinate.longitude){
+                found = true
+                break
+            }
+        }
+        if !found {
+            _ = Annotation(locationString: annotation.title!, latitude: Float(annotation.coordinate.latitude), longitude: Float(annotation.coordinate.longitude), page: "1", context: (delegate.stack.context))
+            saveToCoreData()
         }
     }
     
@@ -199,30 +207,18 @@ class AddAnnotationViewController: UIViewController, UITextFieldDelegate, MKMapV
             self.annotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude:     localSearchResponse!.boundingRegion.center.longitude)
             self.mapView.addAnnotation(self.annotation)
             
-            
             DispatchQueue.main.async {
-                let annotationCoreData = Annotation(locationString: self.searchTF.text!, latitude: Float(self.annotation.coordinate.latitude), longitude: Float(self.annotation.coordinate.longitude), context: (self.delegate.stack.context))
-                self.delegate.stack.context.insert(annotationCoreData)
-                self.saveToCoreData()
-                self.refreshMapView()
+                self.addAnnotationToCoreData()
             }
         }
     }
 
-    func displayAddImageCollectionViewController(){
-        goingForward = true
-        performSegue(withIdentifier: "AddImagesCollectionViewController", sender: self)
-    }
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ShowImagesCollectionViewController {
-            destination.imageDataArr = imageDataArrForSegue
             destination.annotationForDeleting = annotationForSegue
         }
         else if segue.destination is AddImagesCollectionViewController {
             let destination = segue.destination as? AddImagesCollectionViewController
-            destination?.imageUrlArr = imageUrlArr
             destination?.annotation = annotation
         }
     }

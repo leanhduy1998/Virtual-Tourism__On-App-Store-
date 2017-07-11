@@ -63,7 +63,7 @@ class TableViewController: CoreDataTableViewController {
         let imageArr = annotation.images?.allObjects as? [Image]
         
         if imageArr?.count == 0 {
-            let alertController = UIAlertController(title: "Error adding your picture", message: "", preferredStyle: UIAlertControllerStyle.alert)
+            let alertController = UIAlertController(title: "Could not display your pictures", message: "", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.cancel, handler: nil))
             self.present(alertController, animated: true, completion: nil)
         }

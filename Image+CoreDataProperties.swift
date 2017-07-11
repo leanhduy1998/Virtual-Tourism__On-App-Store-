@@ -2,7 +2,7 @@
 //  Image+CoreDataProperties.swift
 //  Virtual Tourist
 //
-//  Created by Duy Le on 7/3/17.
+//  Created by Duy Le on 7/10/17.
 //  Copyright © 2017 Andrew Le. All rights reserved.
 //
 

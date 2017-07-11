@@ -11,12 +11,14 @@ import CoreData
 
 @objc(Annotation)
 public class Annotation: NSManagedObject {
-    convenience init(locationString: String, latitude: Float, longitude: Float, context: NSManagedObjectContext){
+    convenience init(locationString: String, latitude: Float, longitude: Float, page: String, context: NSManagedObjectContext){
         if let ent = NSEntityDescription.entity(forEntityName: "Annotation", in: context){
             self.init(entity: ent, insertInto: context)
             self.latitude = latitude
             self.longitude = longitude
             self.locationString = locationString
+            self.page = page
+            
         }
         else {
             fatalError("unable to find Annotation Entity name")
