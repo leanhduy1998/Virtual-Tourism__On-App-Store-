@@ -20,11 +20,15 @@ class CoreDataDownloadImage {
                         var imageArr = [Image]()
 
                         for url in imageUrlsArr {
+                            AddImagesCollectionViewController.imageUrlArr.append(url)
                             let imageURL = URL(string: url)
+
                             let imageData = try? Data(contentsOf: imageURL!)
                             
-                            let image = Image(imageData: imageData!, locationString: title, context: delegate.stack.context)
-                            imageArr.append(image)
+                            DispatchQueue.main.async {
+                                let image = Image(imageData: imageData!, locationString: title, context: delegate.stack.context)
+                                imageArr.append(image)
+                            }
                         }
                     
                     delegate.initializeFetchedResultsController()
@@ -35,6 +39,8 @@ class CoreDataDownloadImage {
                         if annotationCoreData.latitude == latitude && annotationCoreData.longitude == longitude {
                             for image in imageArr {
                                 image.annotation = annotationCoreData
+                                
+                                print("Download compltete")
                             }
                         }
                     }
@@ -45,35 +51,10 @@ class CoreDataDownloadImage {
                     catch {
                         fatalError()
                     }
-                    print("Download compltete")
+                    
                     AddImagesCollectionViewController.downloadingImageComplete = true
                     
-                    /*
-                    
-                        let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-                        privateContext.persistentStoreCoordinator = delegate.stack.context.persistentStoreCoordinator
-                        
-                        privateContext.perform {
-                            
-                            
-                            do {
-                                try privateContext.save()
-                                delegate.stack.context.performAndWait {
-                                    do {
-                                        try delegate.stack.context.save()
-                                    }
-                                    catch ((let error)){
-                                        fatalError(error.localizedDescription)
-                                    }
-                                }
-                                AddImagesCollectionViewController.downloadingImageComplete = true
-                                print("Download complete")
-                            }
-                            catch ((let error)){
-                                fatalError(error.localizedDescription)
-                            }
-                        }
- */
+   
                 }
                 else {
                     fatalError()

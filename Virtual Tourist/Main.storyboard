@@ -128,7 +128,7 @@
         <scene sceneID="8dK-uD-12E">
             <objects>
                 <collectionViewController id="Tbb-sG-jhw" customClass="ShowImagesCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="ltb-Ru-GPt">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="ltb-Ru-GPt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -344,15 +344,21 @@
                                             <rect key="frame" x="4" y="4" width="367" height="464"/>
                                             <color key="backgroundColor" red="0.93323183060000003" green="0.93339174989999996" blue="0.93322181699999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="JPT-Wg-haM">
+                                            <rect key="frame" x="178" y="226" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <constraints>
+                                    <constraint firstItem="JPT-Wg-haM" firstAttribute="centerX" secondItem="ov2-kJ-giL" secondAttribute="centerX" id="7Hb-5f-zqX"/>
                                     <constraint firstItem="QKL-mT-tdL" firstAttribute="leading" secondItem="ov2-kJ-giL" secondAttribute="leading" constant="4" id="Ame-UT-hvH"/>
+                                    <constraint firstItem="JPT-Wg-haM" firstAttribute="centerY" secondItem="ov2-kJ-giL" secondAttribute="centerY" id="I6S-CX-o7J"/>
                                     <constraint firstItem="QKL-mT-tdL" firstAttribute="top" secondItem="ov2-kJ-giL" secondAttribute="top" constant="4" id="XxL-PT-ic3"/>
                                     <constraint firstAttribute="trailing" secondItem="QKL-mT-tdL" secondAttribute="trailing" constant="4" id="aGZ-Wj-0J5"/>
                                     <constraint firstAttribute="bottom" secondItem="QKL-mT-tdL" secondAttribute="bottom" constant="4" id="r2W-Nq-qUp"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="activityIndicator" destination="JPT-Wg-haM" id="KO5-hF-ss4"/>
                                     <outlet property="imageView" destination="QKL-mT-tdL" id="8pP-B3-B4T"/>
                                 </connections>
                             </collectionViewCell>
@@ -377,7 +383,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EWC-SL-4P3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1246" y="139"/>
+            <point key="canvasLocation" x="1244.9275362318842" y="138.58695652173915"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yJA-1x-xbn">

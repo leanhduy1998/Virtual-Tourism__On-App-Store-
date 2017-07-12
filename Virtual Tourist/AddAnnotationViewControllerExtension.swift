@@ -25,9 +25,9 @@ extension MapViewController {
         searchTF.resignFirstResponder()
     }
     func refreshMapView(){
-        let arr = mapView.annotations
+   /*     let arr = mapView.annotations
         mapView.removeAnnotations(arr)
-        mapView.addAnnotations(arr)
+        mapView.addAnnotations(arr)*/
     }
     func deletaAllDataDebug(){
         do {

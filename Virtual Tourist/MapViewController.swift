@@ -117,19 +117,6 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
         let annotationArr = (delegate.fetchedResultsController.fetchedObjects as? [Annotation])!
         let currentAnnotation = view.annotation as? ImageAnnotation
         
-        /*
-        // if collection Btn clicked
-        if (control as? UIButton)?.currentImage == UIImage(named: "table_30x30") {
-            
-            
-            for annotation in annotationArr {
-                if annotation.latitude == Float((currentAnnotation?.coordinate.latitude)!) && annotation.longitude == Float((currentAnnotation?.coordinate.longitude)!)  {
-                    annotationForSegue = annotation
-                }
-            }
-            performSegue(withIdentifier: "mapToShowImagesCollectionViewController", sender: self)
-        }
- */
             // if delete btn clicked
         if (control as? UIButton)?.currentImage == UIImage(named: "delete") {
             for annotation in annotationArr {
@@ -152,16 +139,19 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     }
 
     func addAnnotationFromHold(gestureRecognizer:UIGestureRecognizer){
-        if gestureRecognizer.state == UIGestureRecognizerState.began {
+        if gestureRecognizer.state == UIGestureRecognizerState.began || gestureRecognizer.state == UIGestureRecognizerState.changed {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            
+            mapView.removeAnnotation(annotation)
             
             annotation = ImageAnnotation()
             annotation.coordinate = newCoordinates
             
             annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
             mapView.addAnnotation(annotation)
-            
+        }
+        if gestureRecognizer.state == UIGestureRecognizerState.ended {
             CoreDataDownloadImage.downloadURLs(title: self.annotation.title!, latitude: Float(self.annotation.coordinate.latitude), longitude: Float(self.annotation.coordinate.longitude), page: 1)
             AddImagesCollectionViewController.downloadingImageComplete = false
             
