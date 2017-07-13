@@ -31,7 +31,7 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     //   deletaAllDataDebug()
+        deletaAllDataDebug()
         
         self.tabBarController?.tabBar.isHidden = true
         

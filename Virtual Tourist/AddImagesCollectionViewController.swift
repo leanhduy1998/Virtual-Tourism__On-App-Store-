@@ -61,6 +61,7 @@ class AddImagesCollectionViewController: UICollectionViewController {
                 if temp.latitude == latitude && temp.longitude == longitude {
                     if((temp.images?.count)! > 0 ){
                         annotationCoreData = temp
+                        collectionView?.reloadData()
                         timer.invalidate()
                     }
                 }
@@ -73,9 +74,6 @@ class AddImagesCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if annotationCoreData == nil && AddImagesCollectionViewController.imageUrlArr.count < 30{
-            return 30
-        }
         if annotationCoreData != nil {
             return (annotationCoreData.images?.count)!
         }
@@ -88,7 +86,7 @@ class AddImagesCollectionViewController: UICollectionViewController {
         cell?.activityIndicator.isHidden = false
         cell?.activityIndicator.startAnimating()
         if AddImagesCollectionViewController.imageUrlArr.count > 0 {
-            downloadImage(imagePath: AddImagesCollectionViewController.imageUrlArr[indexPath.row], completionHandler: { (imageData, error) in
+            HttpRequest.downloadImage(imagePath: AddImagesCollectionViewController.imageUrlArr[indexPath.row], completionHandler: { (imageData, error) in
                 if error == nil {
                     cell?.imageView.image =  UIImage(data: imageData!)
                     cell?.activityIndicator.isHidden = true
@@ -100,28 +98,10 @@ class AddImagesCollectionViewController: UICollectionViewController {
             let imageDataArr = annotationCoreData.images?.allObjects as? [Image]
             if let imageData = imageDataArr?[indexPath.row].image {
                 cell?.imageView.image =  UIImage(data: imageData as Data)
+                cell?.activityIndicator.isHidden = true
             }
-            cell?.activityIndicator.isHidden = true
         }
         return cell!
-    }
-    
-    func downloadImage( imagePath:String, completionHandler: @escaping (_ imageData: Data?, _ errorString: String?) -> Void){
-        let session = URLSession.shared
-        let imgURL = NSURL(string: imagePath)
-        let request: NSURLRequest = NSURLRequest(url: imgURL! as URL)
-        
-        let task = session.dataTask(with: request as URLRequest) {data, response, downloadError in
-            
-            if downloadError != nil {
-                completionHandler(nil, "Could not download image \(imagePath)")
-            } else {
-                
-                completionHandler(data, nil)
-            }
-        }
-        
-        task.resume()
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -154,17 +134,19 @@ class AddImagesCollectionViewController: UICollectionViewController {
     }
     
     func replaceWithNewImages(action: UIAlertAction){
+        AddImagesCollectionViewController.imageUrlArr.removeAll()
         for image in (annotationCoreData.images?.allObjects)! {
             delegate.stack.context.delete((image as? Image)!)
         }
+        CoreDataDownloadImage.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: Int(annotationCoreData.page!)!+1)
+        AddImagesCollectionViewController.downloadingImageComplete = false
+        
         do {
             try delegate.stack.saveContext()
         }
         catch {
             fatalError()
         }
-        CoreDataDownloadImage.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: Int(annotationCoreData.page!)!+1)
-        AddImagesCollectionViewController.downloadingImageComplete = false
         
         fireTimerCheckingDownloadStatus()
     }

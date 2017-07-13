@@ -34,6 +34,7 @@
 		24FF56781F1324DC003C9B58 /* CoreDataDownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF56771F1324DC003C9B58 /* CoreDataDownloadImage.swift */; };
 		24FF56811F145C21003C9B58 /* Annotation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF567D1F145C21003C9B58 /* Annotation+CoreDataProperties.swift */; };
 		24FF56831F145C21003C9B58 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF567F1F145C21003C9B58 /* Image+CoreDataProperties.swift */; };
+		24FF579D1F1710DC003C9B58 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF579C1F1710DC003C9B58 /* HttpRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		24FF567D1F145C21003C9B58 /* Annotation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Annotation+CoreDataProperties.swift"; path = "../Annotation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		24FF567F1F145C21003C9B58 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Image+CoreDataProperties.swift"; path = "../Image+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		24FF56841F15642B003C9B58 /* Model 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 5.xcdatamodel"; sourceTree = "<group>"; };
+		24FF579C1F1710DC003C9B58 /* HttpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				24617FAD1F09B1E1001C433F /* CoreDataTableViewController.swift */,
 				24FF56771F1324DC003C9B58 /* CoreDataDownloadImage.swift */,
 				24617F871F097DF1001C433F /* Model.xcdatamodeld */,
+				24FF579C1F1710DC003C9B58 /* HttpRequest.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				24617FA21F098B9B001C433F /* Image.swift in Sources */,
 				24617FA61F09AAD1001C433F /* TableViewController.swift in Sources */,
 				24617F891F097DF1001C433F /* Model.xcdatamodeld in Sources */,
+				24FF579D1F1710DC003C9B58 /* HttpRequest.swift in Sources */,
 				24617FA81F09AB01001C433F /* TableViewCell.swift in Sources */,
 				24211C251F0AF22500E3317A /* ImageAnnotation.swift in Sources */,
 			);
