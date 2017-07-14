@@ -24,11 +24,7 @@ extension MapViewController {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         searchTF.resignFirstResponder()
     }
-    func refreshMapView(){
-   /*     let arr = mapView.annotations
-        mapView.removeAnnotations(arr)
-        mapView.addAnnotations(arr)*/
-    }
+
     func deletaAllDataDebug(){
         do {
             try delegate.stack.dropAllData()

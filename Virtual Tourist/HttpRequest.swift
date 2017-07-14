@@ -17,7 +17,7 @@ class HttpRequest {
         let task = session.dataTask(with: request as URLRequest) {data, response, downloadError in
             
             if downloadError != nil {
-                completionHandler(nil, "Could not download image \(imagePath)")
+                completionHandler(nil, "Could not download image \(downloadError.debugDescription)")
             } else {
                 
                 completionHandler(data, nil)

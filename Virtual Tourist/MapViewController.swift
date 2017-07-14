@@ -31,8 +31,7 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        deletaAllDataDebug()
-        
+  //      deletaAllDataDebug()
         self.tabBarController?.tabBar.isHidden = true
         
         let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotationFromHold(gestureRecognizer:)))
@@ -157,7 +156,6 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
             
             DispatchQueue.main.async {
                 self.addAnnotationToCoreData()
-                self.refreshMapView()
             }
         }
     }
