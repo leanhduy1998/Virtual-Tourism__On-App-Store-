@@ -26,4 +26,14 @@ class HttpRequest {
         
         task.resume()
     }
+    static func downloadURLs(title: String, latitude: Float, longitude: Float, page: Int, completeHandler: @escaping (_ imageUrlsArr: [String]) -> Void){
+        FlickrClient.downloadLocationImagesUrls(page: page, latitude: latitude, longitude: longitude) { (imageUrlsArr, error) in
+            if error.isEmpty {
+                completeHandler(imageUrlsArr)
+            }
+            else {
+                fatalError(error)
+            }
+        }
+    }
 }

@@ -19,6 +19,8 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     let delegate = UIApplication.shared.delegate as! AppDelegate
     private var annotationForSegue = Annotation()
     
+    var imageUrlArr = [String]()
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -31,7 +33,7 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-  //      deletaAllDataDebug()
+       // deletaAllDataDebug()
         self.tabBarController?.tabBar.isHidden = true
         
         let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotationFromHold(gestureRecognizer:)))
@@ -151,12 +153,8 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
             mapView.addAnnotation(annotation)
         }
         if gestureRecognizer.state == UIGestureRecognizerState.ended {
-            CoreDataDownloadImage.downloadURLs(title: self.annotation.title!, latitude: Float(self.annotation.coordinate.latitude), longitude: Float(self.annotation.coordinate.longitude), page: 1)
-            AddImagesCollectionViewController.downloadingImageComplete = false
+            addAnnotationToCoreData()
             
-            DispatchQueue.main.async {
-                self.addAnnotationToCoreData()
-            }
         }
     }
     
@@ -170,9 +168,18 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
                 break
             }
         }
+        
         if !found {
             _ = Annotation(locationString: annotation.title!, latitude: Float(annotation.coordinate.latitude), longitude: Float(annotation.coordinate.longitude), page: "1", context: (delegate.stack.context))
-            saveToCoreData()
+            saveToCoreData {
+                
+            }
+            
+            HttpRequest.downloadURLs(title: annotation.title!, latitude: Float(annotation.coordinate.latitude), longitude: Float(annotation.coordinate.longitude), page: 1, completeHandler: {(result) in
+                DispatchQueue.main.async {
+                    self.imageUrlArr = result
+                }
+            })
         }
     }
     
@@ -208,11 +215,44 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
         else if segue.destination is AddImagesCollectionViewController {
             let destination = segue.destination as? AddImagesCollectionViewController
             destination?.annotation = annotation
+            destination?.imageUrlArr = imageUrlArr
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func isLoading(isLoading: Bool){
+        searchTF.isEnabled = !isLoading
+        view.isUserInteractionEnabled = !isLoading
+        
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        searchTF.resignFirstResponder()
+    }
+    
+    func deletaAllDataDebug(){
+        do {
+            try delegate.stack.dropAllData()
+        }
+        catch {
+            fatalError()
+        }
+    }
+    
+    func saveToCoreData(completeHandler: @escaping ()-> Void){
+        do {
+            try delegate.stack.saveContext()
+        }
+        catch ((let error)){
+            fatalError(error.localizedDescription)
+        }
+        print("done saving")
     }
     
 }
