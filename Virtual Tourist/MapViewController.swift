@@ -19,7 +19,7 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     let delegate = UIApplication.shared.delegate as! AppDelegate
     private var annotationForSegue = Annotation()
     
-    var imageUrlArr = [String]()
+
     
 
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +114,6 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
         let annotationArr = (delegate.fetchedResultsController.fetchedObjects as? [Annotation])!
         let currentAnnotation = view.annotation as? ImageAnnotation
         
@@ -140,21 +139,26 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     }
 
     func addAnnotationFromHold(gestureRecognizer:UIGestureRecognizer){
-        if gestureRecognizer.state == UIGestureRecognizerState.began || gestureRecognizer.state == UIGestureRecognizerState.changed {
+        if gestureRecognizer.state == UIGestureRecognizerState.began  {
+            
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
             
             mapView.removeAnnotation(annotation)
-            
             annotation = ImageAnnotation()
             annotation.coordinate = newCoordinates
             
             annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
             mapView.addAnnotation(annotation)
         }
+        if gestureRecognizer.state == UIGestureRecognizerState.changed  {
+            let touchPoint = gestureRecognizer.location(in: mapView)
+            let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            annotation.coordinate = newCoordinates
+            annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
+        }
         if gestureRecognizer.state == UIGestureRecognizerState.ended {
             addAnnotationToCoreData()
-            
         }
     }
     
@@ -175,11 +179,7 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
                 
             }
             
-            HttpRequest.downloadURLs(title: annotation.title!, latitude: Float(annotation.coordinate.latitude), longitude: Float(annotation.coordinate.longitude), page: 1, completeHandler: {(result) in
-                DispatchQueue.main.async {
-                    self.imageUrlArr = result
-                }
-            })
+    
         }
     }
     
@@ -209,13 +209,9 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? ShowImagesCollectionViewController {
-            destination.annotationForDeleting = annotationForSegue
-        }
-        else if segue.destination is AddImagesCollectionViewController {
+        if segue.destination is AddImagesCollectionViewController {
             let destination = segue.destination as? AddImagesCollectionViewController
             destination?.annotation = annotation
-            destination?.imageUrlArr = imageUrlArr
         }
     }
     

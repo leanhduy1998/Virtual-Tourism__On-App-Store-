@@ -17,13 +17,13 @@ class AddImagesCollectionViewController: UICollectionViewController {
 
     var imageIndex = Int()
     var annotation = ImageAnnotation()
+    
     private let delegate = UIApplication.shared.delegate as! AppDelegate
     
-    var imageUrlArr = [String]()
+    private var imageUrlArr = [String]()
     
-    private var hasImages = false
     
-    var annotationCoreData = Annotation()
+    var annotationCoreData : Annotation!
     
     var timer = Timer()
     
@@ -33,17 +33,27 @@ class AddImagesCollectionViewController: UICollectionViewController {
         
         let latitude = Float(annotation.coordinate.latitude)
         let longitude = Float(annotation.coordinate.longitude)
-
+        
+        
         delegate.initializeFetchedResultsController()
         let annotationArr = (delegate.fetchedResultsController.fetchedObjects as? [Annotation])!
         for temp in annotationArr {
             if temp.latitude == latitude && temp.longitude == longitude {
                 annotationCoreData = temp
-                if (annotationCoreData.images?.count)! > 0 {
-                    hasImages = true
-                }
+                
             }
         }
+        
+        if annotationCoreData.images?.count == 0 {
+            HttpRequest.downloadURLs(title: annotation.title!, latitude: latitude, longitude: longitude, page: 1, completeHandler: {(result) in
+                DispatchQueue.main.async {
+                    self.imageUrlArr = result
+                    self.downloadImageToCoreData()
+                    
+                }
+            })
+        }
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,10 +66,44 @@ class AddImagesCollectionViewController: UICollectionViewController {
         flowLayout.minimumLineSpacing = CGFloat(space)
     }
     
+    private func downloadImageToCoreData(){
+        for url in imageUrlArr {
+            HttpRequest.downloadImage(imagePath: url, completionHandler: { (imageData, error) in
+                if error == nil {
+                    DispatchQueue.main.async {
+                        let image = Image(imageData: imageData!, locationString: self.annotation.title!, context: self.delegate.stack.context)
+                        if (self.annotationCoreData.images?.contains(image))! {
+                            self.delegate.stack.context.delete(image)
+                        }
+                        else {
+                            image.annotation = self.annotationCoreData
+                        }
+                        
+                        do {
+                            try self.delegate.stack.saveContext()
+                        }
+                        catch {
+                            fatalError()
+                        }
+                        self.collectionView?.reloadData()
+                    }
+                }
+            })
+        }
+    }
+    
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if hasImages {
-            return (annotationCoreData.images?.count)!
+        if imageUrlArr.count == 0 {
+            if annotationCoreData != nil{
+                if annotationCoreData.images?.count == 0 {
+                    return 30
+                }
+                return (annotationCoreData.images?.count)!
+            }
+            else {
+                return 30
+            }
         }
         return imageUrlArr.count
     }
@@ -71,51 +115,32 @@ class AddImagesCollectionViewController: UICollectionViewController {
         cell?.activityIndicator.isHidden = false
         cell?.activityIndicator.startAnimating()
         
-        if hasImages  {
-            let imageDataArr = annotationCoreData.images?.allObjects as? [Image]
-            if indexPath.row < ((annotationCoreData.images?.count)!) {
-                if let imageData = imageDataArr?[indexPath.row].image {
-                    cell?.imageView.image =  UIImage(data: imageData as Data)
-                    cell?.activityIndicator.stopAnimating()
-                }
+
+        let imageDataArr = annotationCoreData.images?.allObjects as? [Image]
+        if indexPath.row < ((annotationCoreData.images?.count)!) {
+            if let imageData = imageDataArr?[indexPath.row].image {
+                cell?.imageView.image =  UIImage(data: imageData as Data)
+                cell?.activityIndicator.stopAnimating()
             }
         }
-        
-        else {
-            HttpRequest.downloadImage(imagePath: imageUrlArr[indexPath.row], completionHandler: { (imageData, error) in
-                if error == nil {
-                    DispatchQueue.main.async {
-                        cell?.imageView.image =  UIImage(data: imageData!)
-                        cell?.activityIndicator.stopAnimating()
-                        
-                        let image = Image(imageData: imageData!, locationString: self.annotation.title!, context: self.delegate.stack.context)
-                        image.annotation = self.annotationCoreData
-                        
-                        do {
-                            try self.delegate.stack.saveContext()
-                        }
-                        catch {
-                            fatalError()
-                        }
-                    }
-                }
-            })
-        }
-        
         return cell!
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if imageUrlArr.count >  (indexPath.row + 1) {
             imageUrlArr.remove(at: indexPath.row)
-            let image = annotationCoreData.images?.allObjects[indexPath.row] as? Image
-            delegate.stack.context.delete(image!)
-            do {
-                try delegate.stack.saveContext()
-            }
-            catch {
-                fatalError()
-            }
-            collectionView.reloadData()
+        }
+        
+        let image = annotationCoreData.images?.allObjects[indexPath.row] as? Image
+        delegate.stack.context.delete(image!)
+        do {
+            try delegate.stack.saveContext()
+        }
+        catch {
+            fatalError()
+        }
+        
+        collectionView.reloadData()
     }
     
     @IBAction func moreOptionBtnPressed(_ sender: Any) {
@@ -127,11 +152,11 @@ class AddImagesCollectionViewController: UICollectionViewController {
     }
     
     func addNewImages(action: UIAlertAction){
-        hasImages = false
         HttpRequest.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: Int(annotationCoreData.page!)!+1, completeHandler: {(result) in
             DispatchQueue.main.async {
-                self.imageUrlArr = result
-                self.collectionView?.reloadData()
+                //self.imageUrlArr = result
+                self.imageUrlArr.append(contentsOf: result)
+                self.downloadImageToCoreData()
             }
             
         })
@@ -151,11 +176,10 @@ class AddImagesCollectionViewController: UICollectionViewController {
         
         collectionView?.reloadData()
         
-        hasImages = false
         HttpRequest.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: Int(annotationCoreData.page!)!+1, completeHandler: {(result) in
             DispatchQueue.main.async {
                 self.imageUrlArr = result
-                self.collectionView?.reloadData()
+                self.downloadImageToCoreData()
             }
             
         })
