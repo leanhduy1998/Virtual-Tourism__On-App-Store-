@@ -37,7 +37,7 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
         self.tabBarController?.tabBar.isHidden = true
         
         let uilgr = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotationFromHold(gestureRecognizer:)))
-        uilgr.minimumPressDuration = 1.0
+        uilgr.minimumPressDuration = 0.5
         
         mapView.addGestureRecognizer(uilgr)
     }

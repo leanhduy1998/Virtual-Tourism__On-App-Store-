@@ -60,17 +60,6 @@ class TableViewController: CoreDataTableViewController {
             cell?.numberOfPicsLabel.text = "\(String(format: "%d pictures", (annotation.images?.count)!)) pictures"
         }
         
-        let imageArr = annotation.images?.allObjects as? [Image]
-        
-        if imageArr?.count == 0 {
-            let alertController = UIAlertController(title: "Could not display your pictures", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.cancel, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
-        }
-        else {
-            let imageData = imageArr?[0].image
-            cell?.imageV.image =  UIImage(data: imageData! as Data)
-        }
         return cell!
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -78,18 +78,23 @@ class AddImagesCollectionViewController: UICollectionViewController {
                         else {
                             image.annotation = self.annotationCoreData
                         }
+                        self.saveCoreData()
                         
-                        do {
-                            try self.delegate.stack.saveContext()
-                        }
-                        catch {
-                            fatalError()
-                        }
+                        
                         self.collectionView?.reloadData()
                     }
                 }
             })
         }
+    }
+    private func saveCoreData(){
+        do {
+            try self.delegate.stack.saveContext()
+        }
+        catch {
+            fatalError()
+        }
+    
     }
     
     
@@ -133,12 +138,7 @@ class AddImagesCollectionViewController: UICollectionViewController {
         
         let image = annotationCoreData.images?.allObjects[indexPath.row] as? Image
         delegate.stack.context.delete(image!)
-        do {
-            try delegate.stack.saveContext()
-        }
-        catch {
-            fatalError()
-        }
+        saveCoreData()
         
         collectionView.reloadData()
     }
@@ -152,7 +152,12 @@ class AddImagesCollectionViewController: UICollectionViewController {
     }
     
     func addNewImages(action: UIAlertAction){
-        HttpRequest.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: Int(annotationCoreData.page!)!+1, completeHandler: {(result) in
+        let page = Int(annotationCoreData.page!)!+1
+        annotationCoreData.page = "\(page)"
+        
+        saveCoreData()
+        
+        HttpRequest.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: page, completeHandler: {(result) in
             DispatchQueue.main.async {
                 //self.imageUrlArr = result
                 self.imageUrlArr.append(contentsOf: result)
@@ -167,16 +172,16 @@ class AddImagesCollectionViewController: UICollectionViewController {
         for image in (annotationCoreData.images?.allObjects)! {
             delegate.stack.context.delete((image as? Image)!)
         }
-        do {
-            try delegate.stack.saveContext()
-        }
-        catch {
-            fatalError()
-        }
+        
+        let page = Int(annotationCoreData.page!)!+1
+        annotationCoreData.page = "\(page)"
+        
+        saveCoreData()
         
         collectionView?.reloadData()
         
-        HttpRequest.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: Int(annotationCoreData.page!)!+1, completeHandler: {(result) in
+        
+        HttpRequest.downloadURLs(title: annotationCoreData.locationString!, latitude: annotationCoreData.latitude, longitude: annotationCoreData.longitude, page: page, completeHandler: {(result) in
             DispatchQueue.main.async {
                 self.imageUrlArr = result
                 self.downloadImageToCoreData()
