@@ -144,6 +144,7 @@
 		24342E231F05CBA100C541DA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				24617FA41F09AAB0001C433F /* Cells */,
 				24211C241F0AF22500E3317A /* ImageAnnotation.swift */,
 			);
 			name = View;
@@ -157,7 +158,6 @@
 				24617FA51F09AAD1001C433F /* TableViewController.swift */,
 				24211C3E1F0C5AD300E3317A /* ShowImagesCollectionViewController.swift */,
 				244E6CE71F0F504400EBF55D /* ShowImageDetailViewController.swift */,
-				24617FA41F09AAB0001C433F /* Cells */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
