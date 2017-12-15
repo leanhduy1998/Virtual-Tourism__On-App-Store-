@@ -93,7 +93,11 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
         pinAnnotationView.isDraggable = false
         pinAnnotationView.canShowCallout = true
         pinAnnotationView.animatesDrop = true
-        pinAnnotationView.detailCalloutAccessoryView = imageView
+        
+        if(UIImagePNGRepresentation(image) != nil){
+            pinAnnotationView.detailCalloutAccessoryView = imageView
+        }
+        
         
         let addBtn = UIButton()
         addBtn.frame.size.width = 30
@@ -131,6 +135,7 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
             catch ((let error)){
                 fatalError(error.localizedDescription)
             }
+            
         }
         else {
             annotation = currentAnnotation!
@@ -148,14 +153,14 @@ class MapViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegat
             annotation = ImageAnnotation()
             annotation.coordinate = newCoordinates
             
-            annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
+            annotation.title = "Latitude:  \(String(format: "%.2f", Double(newCoordinates.latitude))), Longitude: \(String(format: "%.2f", Double(newCoordinates.longitude)))"
             mapView.addAnnotation(annotation)
         }
         if gestureRecognizer.state == UIGestureRecognizerState.changed  {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
             annotation.coordinate = newCoordinates
-            annotation.title = String(format: "Latitude: %f, Longitude: %f", Float(newCoordinates.latitude),Float(newCoordinates.longitude))
+            annotation.title = "Latitude:  \(String(format: "%.2f", Double(newCoordinates.latitude))), Longitude: \(String(format: "%.2f", Double(newCoordinates.longitude)))"
         }
         if gestureRecognizer.state == UIGestureRecognizerState.ended {
             addAnnotationToCoreData()

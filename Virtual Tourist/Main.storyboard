@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GiG-7W-mVB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="GiG-7W-mVB">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,7 +33,7 @@
                 <navigationController id="BfZ-A5-PTz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="coz-rr-XpV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZPs-e9-CK0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -57,7 +57,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="140"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="icd-zb-6Zc" id="vCQ-Ag-k2t">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="139.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="139.66666666666666"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bkd-yL-wd1">
@@ -153,6 +153,7 @@
                         </connections>
                     </collectionView>
                     <connections>
+                        <outlet property="collectionview" destination="ltb-Ru-GPt" id="msl-5h-skb"/>
                         <outlet property="flowLayout" destination="iNB-e2-gwb" id="wAR-o3-zcm"/>
                         <segue destination="TQb-Nw-9j3" kind="show" identifier="ShowImageDetailViewController" id="5eL-HK-h26"/>
                     </connections>
@@ -173,25 +174,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uO3-S3-oAB">
-                                <rect key="frame" x="0.0" y="64" width="414" height="628"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uO3-S3-oAB">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                             </imageView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FjI-Np-c7h">
-                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cV4-tT-kXw"/>
-                                    <barButtonItem title="Delete Photo" id="PPT-zu-t2A"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="0DV-1r-x7K"/>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="FjI-Np-c7h" firstAttribute="leading" secondItem="hGe-u0-qwb" secondAttribute="leading" id="4SE-dx-EtU"/>
-                            <constraint firstItem="FjI-Np-c7h" firstAttribute="top" secondItem="uO3-S3-oAB" secondAttribute="bottom" id="7u5-3n-FQv"/>
+                            <constraint firstItem="mM2-hC-S4v" firstAttribute="top" secondItem="uO3-S3-oAB" secondAttribute="bottom" id="CbL-Gt-TlI"/>
                             <constraint firstItem="uO3-S3-oAB" firstAttribute="leading" secondItem="hGe-u0-qwb" secondAttribute="leading" id="Gka-fa-Mzd"/>
-                            <constraint firstItem="mM2-hC-S4v" firstAttribute="top" secondItem="FjI-Np-c7h" secondAttribute="bottom" id="MrZ-tE-aCf"/>
-                            <constraint firstAttribute="trailing" secondItem="FjI-Np-c7h" secondAttribute="trailing" id="WSY-NT-7Fn"/>
                             <constraint firstItem="uO3-S3-oAB" firstAttribute="top" secondItem="isv-KQ-pnE" secondAttribute="bottom" id="h3k-T7-5Xy"/>
                             <constraint firstAttribute="trailing" secondItem="uO3-S3-oAB" secondAttribute="trailing" id="o48-GG-HFO"/>
                         </constraints>
@@ -212,7 +202,7 @@
                 <navigationController id="Drj-09-UvP" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="List" image="table_30x30" id="4nb-wg-86V"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EVd-jh-Ekw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -380,7 +370,7 @@
             <objects>
                 <navigationController id="zPn-w7-2WU" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aWv-hW-nMU">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -397,6 +387,6 @@
         <image name="table_30x30" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="C9H-HJ-n7c"/>
+        <segue reference="5lN-Wf-apt"/>
     </inferredMetricsTieBreakers>
 </document>

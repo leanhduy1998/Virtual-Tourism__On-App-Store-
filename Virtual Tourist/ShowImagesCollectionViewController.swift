@@ -20,6 +20,8 @@ class ShowImagesCollectionViewController: UICollectionViewController {
     private var imageDataForSegue = Data()
     
     
+    @IBOutlet var collectionview: UICollectionView!
+    
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     
@@ -31,9 +33,10 @@ class ShowImagesCollectionViewController: UICollectionViewController {
         flowLayout.minimumInteritemSpacing = CGFloat(space)
         flowLayout.minimumLineSpacing = CGFloat(space)
         
-        
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPress(longPressGestureRecognizer:)))
         view.addGestureRecognizer(longPressRecognizer)
+        
+        collectionview.reloadData()
     }
     func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
@@ -58,12 +61,25 @@ class ShowImagesCollectionViewController: UICollectionViewController {
         
         annotationForDeleting.removeFromImages(imageForDelete!)
         
+        var count = 0
+        for image in imageDataArr{
+            if(UIImagePNGRepresentation(UIImage(data: imageForDelete?.image! as! Data)!)! == UIImagePNGRepresentation(UIImage(data: image)!)){
+                imageDataArr.remove(at: count)
+                break
+            }
+            count = count+1
+        }
+        
         do {
             try delegate?.stack.saveContext()
         }
         catch ((let error)){
             fatalError(error.localizedDescription)
         }
+        DispatchQueue.main.async {
+            self.collectionview.reloadData()
+        }
+        
     }
     private func deleteLocation(action: UIAlertAction){
         delegate?.stack.context.delete(annotationForDeleting)
