@@ -29,3 +29,9 @@ You can delete images either by clicking them when you are seeing them in the lo
 You can replace the old images of a location with new images, or you can add more to the location.
 
 ![alt text](https://github.com/leanhduy1998/Virtual-Tourist/blob/master/virtual%20tourist%204.2.mov.gif)
+
+### Delete a location
+
+You can delete a location either through the map or through the list view.
+
+![alt text](https://github.com/leanhduy1998/Virtual-Tourist/blob/master/virtual%20tourist%205.mov.gif)
