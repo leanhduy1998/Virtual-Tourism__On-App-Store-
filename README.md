@@ -37,3 +37,10 @@ You can delete a location either through the map or through the list view.
 ![alt text](https://github.com/leanhduy1998/Virtual-Tourist/blob/master/virtual%20tourist%205.mov.gif)
 
 ### All of the data are saved and updated using Core Data.
+
+## Built With
+
+* Flickr API
+* CoreData
+* UIKit
+* Swift
