@@ -1,4 +1,4 @@
-# Virtual Tourist
+# Virtual Tourism
 
 The fourth Project for the Udacity iOS Developer Nanodegree.
 
